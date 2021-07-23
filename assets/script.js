@@ -158,18 +158,15 @@ function getDatapoints(xStart,yStart,length) {
     let _xmlHttp = null; //object used to call a server
     let _url = `https://canvasjs.com/services/data/datapoints.php?xstart=${xStart}&ystart=${yStart}&length=${length}&type=json`; // url to query
   
-    _xmlHttp = getXMLHTTP(); //instansiate XMLHttpRequest 
+    _xmlHttp = getXMLHTTP(); //instansiate XMLHttpRequest
+    //_xmlHttp = new XMLHttpRequest;
   
     if(_xmlHttp) {
       _xmlHttp.open("GET", _url, true); //query url
-      _xmlHttp.onload = function(data) {
+      _xmlHttp.onload = function() {
         if(_xmlHttp.readyState === 4 && _xmlHttp.status === 200) {  // the request succeed
-          //const xml = JSON.parse(this.responseText);
-          let data = JSON.parse(this.responseText); 
-          console.log("data from getDatapoints :");
-          console.log(data);
-          data.forEach(v => { dataPoints.push(v) })
-          //console.log(data);
+          let data = JSON.parse(this.responseText);
+          dataPoints = data;
         } else {
           alert ("Something went wrong. Server not respond."); //the request failed
         }
@@ -179,11 +176,12 @@ function getDatapoints(xStart,yStart,length) {
     }
 }
 
+
 //draw chart based on data getted from php page
 function drawLiveDataPointsChart() {
     const canvas = document.getElementById("live-chart");
 
-    const data = {
+    let data = {
         labels : [],
         datasets : [ { label: "Live Chart", data: [], fill: false, borderColor: `rgb(${randomRGB()},${randomRGB()},${randomRGB()})` } ]
     }
@@ -204,30 +202,7 @@ function drawLiveDataPointsChart() {
     let length = 10
 
     function updateLiveDataPointsChart() {
-        /*fetch(`https://canvasjs.com/services/data/datapoints.php?xstart=${xStart}&ystart=${yStart}&length=${length}&type=json`)
-            .then(value => value.json())
-            .then(data => {
-                console.log(data)
-
-                data.forEach(value => {
-                    chart.data.labels.push(value[0])
-                    chart.data.datasets[0].data.push(value[1])
-                })
-
-                xStart = chart.data.labels.length + 1
-                yStart = chart.data.datasets[0].data[chart.data.datasets[0].data.length - 1]
-                lenght = 1
-
-                chart.update();
-                setTimeout(() => updateLiveDataPointsChart(), 1000)
-            })
-            .catch(error => {
-                console.error(error)
-            })*/
-
         getDatapoints(xStart,yStart,length);
-        console.log("datapoints :");
-        console.log(dataPoints);
         dataPoints.forEach( value => {
             chart.data.labels.push(value[0])
             chart.data.datasets[0].data.push(value[1])
@@ -235,11 +210,10 @@ function drawLiveDataPointsChart() {
             xStart = chart.data.labels.length + 1
             yStart = chart.data.datasets[0].data[chart.data.datasets[0].data.length - 1]
             length = 1
-
-            chart.update(); //update chart
-            //call updateLiveDataPointsChart() every second
-            setTimeout(() => updateLiveDataPointsChart(), 1000); 
         })
+        chart.update(); //update chart
+        //call updateLiveDataPointsChart() every second
+        setTimeout(() => updateLiveDataPointsChart(), 1000); 
     }
 
     //call updateLiveDataPointsChart() first time
