@@ -14,7 +14,7 @@ Description : use chart.js library to update html by drawing new charts
 - w3c validator : ?
 
 ## Author
-Abdelilah Benghadda => Junior Developer @Becode.org 
+Abdelilah Benghadda => Junior Developer @Becode.org  
 João Andrade => Junior Developer @Becore.org
 
 ## Functionalities
