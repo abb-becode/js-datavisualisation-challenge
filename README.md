@@ -6,7 +6,7 @@
 JAVASCRIPT DATAVISUALISATION CHALLENGE 
 
 ## General informations 
-Title       : drawing chart
+Title       : drawing chart  
 Description : use chart.js library to update html by drawing new charts
 
 #### Checking:
