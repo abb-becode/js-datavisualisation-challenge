@@ -24,8 +24,5 @@ João Andrade => Junior Developer @Becore.org
 - Ajax
 - DOM
 
-## Technologies
-HTML - JAVASCRIPT
-
 ## Versioning 
 version : V-001
